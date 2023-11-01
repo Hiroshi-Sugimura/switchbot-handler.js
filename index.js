@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-//	Copyright (C) Hiroshi SUGIMURA 2023.10.01
+//	Copyright (C) Hiroshi SUGIMURA 2023.11.01
 //////////////////////////////////////////////////////////////////////
 'use strict'
 
@@ -57,6 +57,7 @@ class SwitchBot {
      * @func getDeviceStatus
      */
     getDeviceStatus(callback) {
+        this.getRequest(`/v1.1/devices/${deviceId}/status`, callback);
     }
 
     /**
@@ -67,6 +68,35 @@ class SwitchBot {
         const res = this.getRequestSync(`/v1.1/devices/${deviceId}/status`);
         return res;
     }
+
+    /**
+     * @func setDeviceStatus
+     */
+    setDeviceStatus(deviceId, _command, _params, callback) {
+        const body = {
+            command: _command,
+            parameters: _params,
+            commandType: 'command'
+        }
+        this.postRequest(`/v1.1/devices/${deviceId}/status`, body, callback);
+    }
+
+    /**
+     * @func setDeviceStatusSync
+     */
+    async setDeviceStatusSync(deviceId, _command, _params) {
+        // GET /v1.1/devices/{deviceId}/commands
+        const body = {
+            command: _command,
+            parameters: _params,
+            commandType: 'command'
+        };
+        const res = this.postRequestSync(`/v1.1/devices/${deviceId}/commands`, body);
+        return res;
+    }
+
+    //================================================================
+    // inner function
 
     /**
      * @func getRequest
