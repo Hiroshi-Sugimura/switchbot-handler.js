@@ -1,5 +1,5 @@
 {
-  "name": "@sugilab/switchbot-client",
+  "name": "switchbot-handler",
   "version": "0.0.1",
   "description": "This module provides SwitchBot client API v1.1.",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Hiroshi-Sugimura/switchbot-client.js"
+    "url": "https://github.com/Hiroshi-Sugimura/switchbot-handler.js"
   },
   "author": {
     "name": "SUGIMURA Hiroshi"
@@ -18,6 +18,9 @@
     "crypto": "^1.0.1"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "Keywords": [
     "SwitchBot",
     "Smart house",

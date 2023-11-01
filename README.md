@@ -6,7 +6,7 @@ API version 1.1
 # Install
 
 ```bash
-npm i @sugilab/switchbot-client
+npm i switchbot-handler
 ```
 
 # Demos
