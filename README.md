@@ -9,10 +9,10 @@ API version 1.1
 npm i switchbot-handler
 ```
 
-# Demos
+# Documents
 
+(https://hiroshi-sugimura.github.io/switchbot-handler.js/)[https://hiroshi-sugimura.github.io/switchbot-handler.js/]
 
-# meta data
 
 ## Authors
 
