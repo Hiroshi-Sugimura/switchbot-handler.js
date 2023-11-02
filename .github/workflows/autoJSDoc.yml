@@ -1,4 +1,4 @@
-name: GitHub pages
+name: autoJSDoc
 
 on:
   push:
