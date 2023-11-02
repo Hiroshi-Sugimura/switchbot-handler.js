@@ -30,6 +30,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v3
+      - name: dir
+        run: |
+          dir # confirm
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
