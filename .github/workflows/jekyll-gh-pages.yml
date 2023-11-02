@@ -35,6 +35,19 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      - name: Build JSDoc
+        uses: andstor/jsdoc-action@v1
+        with:
+          source_dir: ./
+          output_dir: ./doc/jsdoc
+          config_file: ./doc/conf.json
+          template: minami
+          front_page: README.md
+      - name: Deploy JSDoc
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./doc/jsdoc
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
 
