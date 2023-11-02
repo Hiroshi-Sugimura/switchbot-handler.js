@@ -48,7 +48,7 @@ jobs:
           front_page: README.md
       - uses: actions/upload-pages-artifact@v1
         with:
-          path: ./docs/jsdocs
+          path: ./docs/jsdoc
 
   # Deployment job
   deploy:
