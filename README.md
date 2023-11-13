@@ -11,7 +11,7 @@ npm i switchbot-handler
 
 # Documents
 
-(https://hiroshi-sugimura.github.io/switchbot-handler.js/)[https://hiroshi-sugimura.github.io/switchbot-handler.js/]
+[https://hiroshi-sugimura.github.io/switchbot-handler.js/](https://hiroshi-sugimura.github.io/switchbot-handler.js/)
 
 
 ## Authors
