@@ -1,6 +1,6 @@
 {
   "name": "switchbot-handler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This module provides SwitchBot client API v1.1.",
   "main": "index.js",
   "scripts": {

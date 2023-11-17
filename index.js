@@ -1,6 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 /**
  * @file index.js
+ * @module switchbot-handler
  * @author SUGIMURA Hiroshi
  * @copyright © 2023.11.01 Sugimura Laboratory, KAIT
  * @license MIT
@@ -94,7 +95,7 @@ class SwitchBot {
             parameters: _params,
             commandType: 'command'
         }
-        this.postRequest(`/v1.1/devices/${deviceId}/status`, body, callback);
+        this.postRequest(`/v1.1/devices/${deviceId}/commands`, body, callback);
     }
 
     /**
