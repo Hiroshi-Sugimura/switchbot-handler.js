@@ -1,5 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-//	Copyright (C) Hiroshi SUGIMURA 2023.11.01
+/**
+ * @file index.js
+ * @module switchbot-handler
+ * @author SUGIMURA Hiroshi
+ * @copyright © 2023.11.01 Sugimura Laboratory, KAIT
+ * @license MIT
+ */
 //////////////////////////////////////////////////////////////////////
 'use strict'
 
@@ -11,8 +17,11 @@ const { createHmac, randomUUID } = require('crypto');
  * @desc SwitchBot client
  */
 class SwitchBot {
+	/** @member {string} token */
     token;
+	/** @member {string} secret */
     secret;
+	/** @member {object} http */
     client;
 
     /**
@@ -46,6 +55,7 @@ class SwitchBot {
 
     /**
      * @func getDevicesSync
+     * @return {string}
      */
     async getDevicesSync() {
         // GET /v1.1/devices
@@ -55,6 +65,7 @@ class SwitchBot {
 
     /**
      * @func getDeviceStatus
+     * @param {function} callback - user function
      */
     getDeviceStatus(callback) {
         this.getRequest(`/v1.1/devices/${deviceId}/status`, callback);
@@ -62,6 +73,8 @@ class SwitchBot {
 
     /**
      * @func getDeviceStatusSync
+     * @param {string} deviceId - deviceId
+     * @return {string}
      */
     async getDeviceStatusSync(deviceId) {
         // GET /v1.1/devices/{deviceId}/status
@@ -71,6 +84,10 @@ class SwitchBot {
 
     /**
      * @func setDeviceStatus
+     * @param {string} deviceId
+     * @param {string} _command
+     * @param {string} _params
+     * @param {function} callback
      */
     setDeviceStatus(deviceId, _command, _params, callback) {
         const body = {
@@ -83,6 +100,10 @@ class SwitchBot {
 
     /**
      * @func setDeviceStatusSync
+     * @param {string} deviceId
+     * @param {string} _command
+     * @param {string} _params
+     * @return {string}
      */
     async setDeviceStatusSync(deviceId, _command, _params) {
         // GET /v1.1/devices/{deviceId}/commands
@@ -100,6 +121,8 @@ class SwitchBot {
 
     /**
      * @func getRequest
+     * @param {string} path
+     * @param {function} callback
      */
     getRequest(path, callback) {
         const res = this.client.get(path, { headers: this.getRequestHeaders() })
@@ -113,6 +136,8 @@ class SwitchBot {
 
     /**
      * @func getRequestSync
+     * @param {string} path
+     * @return {string}
      */
     async getRequestSync(path) {
         const res = await this.client.get(path, { headers: this.getRequestHeaders() });
@@ -120,19 +145,26 @@ class SwitchBot {
         return res.data.body;
     }
 
-    /**
-     * @func getRequestHeaders
+
+	/**
+     * @func postRequest
+     * @param {string} path
+     * @param {string} body
+     * @param {function} callback
      */
-    getRequestHeaders() {
-        const t = Date.now();
-        const nonce = randomUUID();
-        const data = this.token + t + nonce;
-        const sign = createHmac("sha256", this.secret).update(Buffer.from(data, 'utf-8')).digest().toString('base64');
-        return { sign, nonce, t };
+    postRequest(path, body, callback) {
+		this.client.post(path, body, { headers: { ...this.getRequestHeaders(), "Content-Type": "application/json" }} )
+			.then(response => {
+                callback(response.data.body);
+            })
+            .catch(error => {
+                throw error;
+            });
     }
 
-    /**
+	/**
      * @func postRequestSync
+     * @return {string}
      */
     async postRequestSync(path, body) {
         const response = await this.client.post(path, body, {
@@ -141,8 +173,21 @@ class SwitchBot {
                 "Content-Type": "application/json"
             }
         })
-
         return response.data;
+    }
+
+	////////////////////////////////////////////////////////
+	// inner
+	/**
+     * @func getRequestHeaders
+     * @return {string}
+     */
+    getRequestHeaders() {
+        const t = Date.now();
+        const nonce = randomUUID();
+        const data = this.token + t + nonce;
+        const sign = createHmac("sha256", this.secret).update(Buffer.from(data, 'utf-8')).digest().toString('base64');
+        return { sign, nonce, t };
     }
 }
 
