@@ -1,7 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 /**
  * @file index.js
- * @module switchbot-handler
  * @author SUGIMURA Hiroshi
  * @copyright © 2023.11.01 Sugimura Laboratory, KAIT
  * @license MIT
