@@ -14,6 +14,7 @@ class SwitchBot {
     token;
     secret;
     client;
+	count;
 
     /**
      * @constrauctors
@@ -23,6 +24,7 @@ class SwitchBot {
     constructor(token, secret) {
         this.token = token;
         this.secret = secret;
+		this.count = 0;
 
         this.client = axios.create({
             baseURL: 'https://api.switch-bot.com',
@@ -102,6 +104,7 @@ class SwitchBot {
      * @func getRequest
      */
     getRequest(path, callback) {
+		this.count += 1;
         const res = this.client.get(path, { headers: this.getRequestHeaders() })
             .then(response => {
                 callback(response.data.body);
@@ -115,9 +118,26 @@ class SwitchBot {
      * @func getRequestSync
      */
     async getRequestSync(path) {
+		this.count += 1;
         const res = await this.client.get(path, { headers: this.getRequestHeaders() });
 
         return res.data.body;
+    }
+
+
+    /**
+     * @func postRequestSync
+     */
+    async postRequestSync(path, body) {
+		this.count += 1;
+        const response = await this.client.post(path, body, {
+            headers: {
+                ...this.getRequestHeaders(),
+                "Content-Type": "application/json"
+            }
+        })
+
+        return response.data;
     }
 
     /**
@@ -131,19 +151,6 @@ class SwitchBot {
         return { sign, nonce, t };
     }
 
-    /**
-     * @func postRequestSync
-     */
-    async postRequestSync(path, body) {
-        const response = await this.client.post(path, body, {
-            headers: {
-                ...this.getRequestHeaders(),
-                "Content-Type": "application/json"
-            }
-        })
-
-        return response.data;
-    }
 }
 
 
