@@ -1,5 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-//	Copyright (C) Hiroshi SUGIMURA 2023.11.01
+/**
+ * @file index.js
+ * @module switchbot-handler
+ * @author SUGIMURA Hiroshi
+ * @copyright © 2023.11.01 Sugimura Laboratory, KAIT
+ * @license MIT
+ */
 //////////////////////////////////////////////////////////////////////
 'use strict'
 
@@ -11,10 +17,14 @@ const { createHmac, randomUUID } = require('crypto');
  * @desc SwitchBot client
  */
 class SwitchBot {
+    /** @member {string} token */
     token;
+    /** @member {string} secret */
     secret;
+    /** @member {object} http */
     client;
-	count;
+    /** @member {integer} counter */
+    count;
 
     /**
      * @constrauctors
@@ -24,7 +34,7 @@ class SwitchBot {
     constructor(token, secret) {
         this.token = token;
         this.secret = secret;
-		this.count = 0;
+        this.count = 0;
 
         this.client = axios.create({
             baseURL: 'https://api.switch-bot.com',
@@ -48,6 +58,7 @@ class SwitchBot {
 
     /**
      * @func getDevicesSync
+     * @return {string}
      */
     async getDevicesSync() {
         // GET /v1.1/devices
@@ -57,6 +68,7 @@ class SwitchBot {
 
     /**
      * @func getDeviceStatus
+     * @param {function} callback - user function
      */
     getDeviceStatus(callback) {
         this.getRequest(`/v1.1/devices/${deviceId}/status`, callback);
@@ -64,6 +76,8 @@ class SwitchBot {
 
     /**
      * @func getDeviceStatusSync
+     * @param {string} deviceId - deviceId
+     * @return {string}
      */
     async getDeviceStatusSync(deviceId) {
         // GET /v1.1/devices/{deviceId}/status
@@ -73,6 +87,10 @@ class SwitchBot {
 
     /**
      * @func setDeviceStatus
+     * @param {string} deviceId
+     * @param {string} _command
+     * @param {string} _params
+     * @param {function} callback
      */
     setDeviceStatus(deviceId, _command, _params, callback) {
         const body = {
@@ -80,11 +98,15 @@ class SwitchBot {
             parameters: _params,
             commandType: 'command'
         }
-        this.postRequest(`/v1.1/devices/${deviceId}/status`, body, callback);
+        this.postRequest(`/v1.1/devices/${deviceId}/commands`, body, callback);
     }
 
     /**
      * @func setDeviceStatusSync
+     * @param {string} deviceId
+     * @param {string} _command
+     * @param {string} _params
+     * @return {string}
      */
     async setDeviceStatusSync(deviceId, _command, _params) {
         // GET /v1.1/devices/{deviceId}/commands
@@ -102,9 +124,11 @@ class SwitchBot {
 
     /**
      * @func getRequest
+     * @param {string} path
+     * @param {function} callback
      */
     getRequest(path, callback) {
-		this.count += 1;
+        this.count += 1;
         const res = this.client.get(path, { headers: this.getRequestHeaders() })
             .then(response => {
                 callback(response.data.body);
@@ -116,9 +140,11 @@ class SwitchBot {
 
     /**
      * @func getRequestSync
+     * @param {string} path
+     * @return {string}
      */
     async getRequestSync(path) {
-		this.count += 1;
+        this.count += 1;
         const res = await this.client.get(path, { headers: this.getRequestHeaders() });
 
         return res.data.body;
@@ -126,22 +152,43 @@ class SwitchBot {
 
 
     /**
+     * @func postRequest
+     * @param {string} path
+     * @param {string} body
+     * @param {function} callback
+     */
+    postRequest(path, body, callback) {
+        this.client.post(path, body, { headers: { ...this.getRequestHeaders(), "Content-Type": "application/json" } })
+            .then(response => {
+                callback(response.data.body);
+            })
+            .catch(error => {
+                throw error;
+            });
+    }
+
+    /**
+     * @async
      * @func postRequestSync
+     * @param {string} path
+     * @param {string} body
+     * @return {string}
      */
     async postRequestSync(path, body) {
-		this.count += 1;
         const response = await this.client.post(path, body, {
             headers: {
                 ...this.getRequestHeaders(),
                 "Content-Type": "application/json"
             }
         })
-
         return response.data;
     }
 
+    ////////////////////////////////////////////////////////
+    // inner
     /**
      * @func getRequestHeaders
+     * @return {string}
      */
     getRequestHeaders() {
         const t = Date.now();
@@ -150,7 +197,6 @@ class SwitchBot {
         const sign = createHmac("sha256", this.secret).update(Buffer.from(data, 'utf-8')).digest().toString('base64');
         return { sign, nonce, t };
     }
-
 }
 
 
