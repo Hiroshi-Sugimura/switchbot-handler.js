@@ -1,6 +1,5 @@
 //////////////////////////////////////////////////////////////////////
 /**
- * @file index.js
  * @author SUGIMURA Hiroshi
  * @copyright © 2023.11.01 Sugimura Laboratory, KAIT
  * @license MIT
@@ -12,8 +11,9 @@ const axios = require('axios');
 const { createHmac, randomUUID } = require('crypto');
 
 /**
- * @class SwitchBotHandler
- * @desc SwitchBot client
+ * SwitchBot clientクラス
+ * SwitchBotのWebAPIを利用して状態取得や状態変更を実施する。
+ * ユーザのTokenとSecretKeyが必要で、取得方法は公式に書いてあります。公式のドキュメントはこのモジュールのReadmeに参照先がかいてあります。
  */
 class SwitchBotHandler {
     /** @member {string} token */
@@ -44,7 +44,7 @@ class SwitchBotHandler {
     }
 
     /**
-     * @func getDevices
+     * デバイスリストを取得する。デバイスリストを取得したらcallback関数を呼ぶ。
      * @param {function} callback - user function
      */
     getDevices(callback) {
@@ -53,8 +53,8 @@ class SwitchBotHandler {
     }
 
     /**
+     * デバイスリストを同期的に取得する。デバイスリストを取得したらreturnする。getDevicesのほうがパフォーマンスに優れる。
      * @async
-     * @func getDevicesSync
      * @return {string}
      */
     async getDevicesSync() {

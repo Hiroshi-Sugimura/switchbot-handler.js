@@ -12,6 +12,12 @@ npm i switchbot-handler
 
 [https://hiroshi-sugimura.github.io/switchbot-handler.js/](https://hiroshi-sugimura.github.io/switchbot-handler.js/)
 
+## Token and Secret key
+
+公式の裏技を参照してください。
+
+[https://blog.switchbot.jp/announcement/api-v1-1/](https://blog.switchbot.jp/announcement/api-v1-1/)
+
 # SwitchBot API Limit
 
 - The amount of API calls per day is limited to 10000 times. Going over that limit will return "Unauthorized."
