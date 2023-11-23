@@ -24,7 +24,7 @@ class SwitchBotHandler {
     client;
 
     /**
-     * @constrauctors
+     * コンストラクタ
      * @param {string} token - switch bot token
      * @param {string} secret - switch bot secret
      */
@@ -64,7 +64,7 @@ class SwitchBotHandler {
     }
 
     /**
-     * @func getDeviceStatus
+     * デバイスの状態取得
      * @param {function} callback - user function
      */
     getDeviceStatus(callback) {
@@ -72,8 +72,8 @@ class SwitchBotHandler {
     }
 
     /**
+     * デバイスの状態取得
      * @async
-     * @func getDeviceStatusSync
      * @param {string} deviceId - deviceId
      * @return {string}
      */
@@ -84,7 +84,7 @@ class SwitchBotHandler {
     }
 
     /**
-     * @func setDeviceStatus
+     * デバイスの状態変更
      * @param {string} deviceId
      * @param {string} _command
      * @param {string} _params
@@ -100,8 +100,8 @@ class SwitchBotHandler {
     }
 
     /**
+     * デバイスの状態変更
      * @async
-     * @func setDeviceStatusSync
      * @param {string} deviceId
      * @param {string} _command
      * @param {string} _params
@@ -122,7 +122,7 @@ class SwitchBotHandler {
     // inner function
 
     /**
-     * @func getRequest
+     * 内部関数：情報取得
      * @param {string} path
      * @param {function} callback
      * @throws error
@@ -138,8 +138,8 @@ class SwitchBotHandler {
     }
 
     /**
+     * 内部関数：情報取得
      * @async
-     * @func getRequestSync
      * @param {string} path
      * @return {string}
      */
@@ -151,7 +151,7 @@ class SwitchBotHandler {
 
 
     /**
-     * @func postRequest
+     * 内部関数：情報書き込み
      * @param {string} path
      * @param {string} body
      * @param {function} callback
@@ -168,8 +168,8 @@ class SwitchBotHandler {
     }
 
     /**
+     * 内部関数：情報書き込み
      * @async
-     * @func postRequestSync
      * @param {string} path
      * @param {string} body
      * @return {string}
@@ -188,6 +188,7 @@ class SwitchBotHandler {
     // inner
 
     /**
+     * 内部構造体：通信用HTTPヘッダ
      * @typedef {Object} Headers
      * @property {string} sign - Hmac
      * @property {string} nonce - random UUID
@@ -195,7 +196,7 @@ class SwitchBotHandler {
      */
 
     /**
-     * @func getRequestHeaders
+     * 内部関数：通信用HTTPヘッダ生成
      * @return {Headers} request headers for switch bot
      */
     getRequestHeaders() {
