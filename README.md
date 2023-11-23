@@ -1,7 +1,6 @@
 # Overview
 
-switch bot client
-API version 1.1
+switch bot client for API version 1.1
 
 # Install
 

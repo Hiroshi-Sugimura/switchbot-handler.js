@@ -1,7 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 /**
  * @file index.js
- * @module switchbot-handler
  * @author SUGIMURA Hiroshi
  * @copyright © 2023.11.01 Sugimura Laboratory, KAIT
  * @license MIT
@@ -13,15 +12,15 @@ const axios = require('axios');
 const { createHmac, randomUUID } = require('crypto');
 
 /**
- * @class SwitchBot
+ * @class SwitchBotHandler
  * @desc SwitchBot client
  */
-class SwitchBot {
+class SwitchBotHandler {
     /** @member {string} token */
     token;
     /** @member {string} secret */
     secret;
-    /** @member {object} http */
+    /** @member {object} http client */
     client;
 
     /**
@@ -54,6 +53,7 @@ class SwitchBot {
     }
 
     /**
+     * @async
      * @func getDevicesSync
      * @return {string}
      */
@@ -72,6 +72,7 @@ class SwitchBot {
     }
 
     /**
+     * @async
      * @func getDeviceStatusSync
      * @param {string} deviceId - deviceId
      * @return {string}
@@ -99,6 +100,7 @@ class SwitchBot {
     }
 
     /**
+     * @async
      * @func setDeviceStatusSync
      * @param {string} deviceId
      * @param {string} _command
@@ -123,6 +125,7 @@ class SwitchBot {
      * @func getRequest
      * @param {string} path
      * @param {function} callback
+     * @throws
      */
     getRequest(path, callback) {
         const res = this.client.get(path, { headers: this.getRequestHeaders() })
@@ -135,6 +138,7 @@ class SwitchBot {
     }
 
     /**
+     * @async
      * @func getRequestSync
      * @param {string} path
      * @return {string}
@@ -151,6 +155,7 @@ class SwitchBot {
      * @param {string} path
      * @param {string} body
      * @param {function} callback
+     * @throws
      */
     postRequest(path, body, callback) {
         this.client.post(path, body, { headers: { ...this.getRequestHeaders(), "Content-Type": "application/json" } })
@@ -181,9 +186,17 @@ class SwitchBot {
 
     ////////////////////////////////////////////////////////
     // inner
+
+    /**
+     * @typedef {Object} Headers
+     * @property {string} sign - Hmac
+     * @property {string} nonce - random UUID
+     * @property {Date} t - time
+     */
+
     /**
      * @func getRequestHeaders
-     * @return {string}
+     * @return {Headers} request headers for switch bot
      */
     getRequestHeaders() {
         const t = Date.now();
@@ -195,7 +208,7 @@ class SwitchBot {
 }
 
 
-module.exports = { SwitchBot };
+module.exports = { SwitchBotHandler };
 //////////////////////////////////////////////////////////////////////
 // EOF
 //////////////////////////////////////////////////////////////////////
