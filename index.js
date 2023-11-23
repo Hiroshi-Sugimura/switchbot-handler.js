@@ -125,7 +125,7 @@ class SwitchBotHandler {
      * @func getRequest
      * @param {string} path
      * @param {function} callback
-     * @throws
+     * @throws error
      */
     getRequest(path, callback) {
         const res = this.client.get(path, { headers: this.getRequestHeaders() })
@@ -155,7 +155,7 @@ class SwitchBotHandler {
      * @param {string} path
      * @param {string} body
      * @param {function} callback
-     * @throws
+     * @throws error
      */
     postRequest(path, body, callback) {
         this.client.post(path, body, { headers: { ...this.getRequestHeaders(), "Content-Type": "application/json" } })
