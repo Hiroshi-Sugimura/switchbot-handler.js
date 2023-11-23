@@ -23,8 +23,6 @@ class SwitchBot {
     secret;
     /** @member {object} http */
     client;
-    /** @member {integer} counter */
-    count;
 
     /**
      * @constrauctors
@@ -34,7 +32,6 @@ class SwitchBot {
     constructor(token, secret) {
         this.token = token;
         this.secret = secret;
-        this.count = 0;
 
         this.client = axios.create({
             baseURL: 'https://api.switch-bot.com',
@@ -128,7 +125,6 @@ class SwitchBot {
      * @param {function} callback
      */
     getRequest(path, callback) {
-        this.count += 1;
         const res = this.client.get(path, { headers: this.getRequestHeaders() })
             .then(response => {
                 callback(response.data.body);
@@ -144,7 +140,6 @@ class SwitchBot {
      * @return {string}
      */
     async getRequestSync(path) {
-        this.count += 1;
         const res = await this.client.get(path, { headers: this.getRequestHeaders() });
 
         return res.data.body;
