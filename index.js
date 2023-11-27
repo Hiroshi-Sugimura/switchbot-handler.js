@@ -93,7 +93,7 @@ class SwitchBotHandler {
     setDeviceStatus(deviceId, _command, _params, callback) {
         const body = {
             command: _command,
-            parameters: _params,
+            parameter: _params,
             commandType: 'command'
         }
         this.postRequest(`/v1.1/devices/${deviceId}/commands`, body, callback);
@@ -111,7 +111,7 @@ class SwitchBotHandler {
         // GET /v1.1/devices/{deviceId}/commands
         const body = {
             command: _command,
-            parameters: _params,
+            parameter: _params,
             commandType: 'command'
         };
         const res = this.postRequestSync(`/v1.1/devices/${deviceId}/commands`, body);
