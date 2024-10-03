@@ -133,6 +133,7 @@ class SwitchBotHandler {
                 callback(response.data.body);
             })
             .catch(error => {
+                console.error(new Date().toFormat("YYYY-MM-DDTHH24:MI:SS"), '| switchbot-handler.getRequest(), error:', error)
                 throw error;
             });
     }
@@ -144,9 +145,13 @@ class SwitchBotHandler {
      * @return {string}
      */
     async getRequestSync(path) {
-        const res = await this.client.get(path, { headers: this.getRequestHeaders() });
-
-        return res.data.body;
+        try {
+            const res = await this.client.get(path, { headers: this.getRequestHeaders() });
+            return res.data.body;
+        } catch (error) {
+            console.error(new Date().toFormat("YYYY-MM-DDTHH24:MI:SS"), '| switchbot-handler.getRequestSync(), error:', error)
+            throw error;
+        }
     }
 
 
@@ -163,6 +168,7 @@ class SwitchBotHandler {
                 callback(response.data.body);
             })
             .catch(error => {
+                console.error(new Date().toFormat("YYYY-MM-DDTHH24:MI:SS"), '| switchbot-handler.postRequest(), error:', error);
                 throw error;
             });
     }

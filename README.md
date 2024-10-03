@@ -32,7 +32,7 @@ $10000[calls] / 1440[calls] = 6.94[calls]$
 
 ## Authors
 
-神奈川工科大学  創造工学部  ホームエレクトロニクス開発学科; Dept. of Home Electronics, Faculty of Creative Engineering, Kanagawa Institute of Technology
+神奈川工科大学  工学部  電気電子情報工学科; Dept. of Electric and Electronics, Faculty of Engineering, Kanagawa Institute of Technology
 
 杉村　博; SUGIMURA Hiroshi
 
@@ -57,6 +57,7 @@ x Warranty
 
 ## Log
 
+- 1.0.3 Debugの修正
 - 1.0.2 setコマンドのdebug
 - 1.0.1 setコマンドのdebug
 - 1.0.0 少し開発が落ち着いた
